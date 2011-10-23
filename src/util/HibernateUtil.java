@@ -10,7 +10,7 @@ public class HibernateUtil {
 
 	private static SessionFactory factory;
 
-	static {		
+	static {	
 		Configuration cfg = new Configuration()
 		.setProperty ("hibernate.dialect", "org.hibernate.dialect.H2Dialect")
 		.setProperty ("hibernate.connection.driver_class", "org.h2.Driver")

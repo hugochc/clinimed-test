@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import mock.ConsultaMock;
 import model.Paciente;
 
 import org.junit.Test;
@@ -61,6 +62,7 @@ public class PacienteTest {
 		//Alterando os dados do paciente recuperado no teste anterior
 		pac.setNomePac("Maria");
 		pac.setCelPac("1234567890");
+		assertTrue(pac.getCelPac().equals("1234567890"));
 
 		//Teste para validar novamente o CPF na alteração
 		assertTrue(pac.getCpfPac().length() == 11);
@@ -74,14 +76,8 @@ public class PacienteTest {
 		result = dao.salvar(result);		
 		/*==================================================================================*/
 		//Excluir
-		//Exclusao de paciente
-		assertTrue(new PacienteDAOImpl().excluir(result));
-		
-		//Tentativa de excluir paciente invalido
-		Paciente exc = new Paciente();
-		exc.setCodPac(25L); // codigo invalido
-		exc.setNomePac("Excluir");
-		exc.setCpfPac("53558366239");
-		assertTrue(new PacienteDAOImpl().excluir(exc) == false);		
+		//Verificar se existe alguma consulta cadastrada para o paciente antes e excluí-lo
+		assertEquals(0, new ConsultaMock().getConsultasPorCpf(result.getCpfPac()));
+		assertTrue(new PacienteDAOImpl().excluir(result));		
 	}
 }
